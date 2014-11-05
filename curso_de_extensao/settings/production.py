@@ -22,3 +22,6 @@ DATABASES = {
 
 STATIC_ROOT = '/opt/static/'
 MEDIA_ROOT = '/opt/media/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'igor.canedo@corp.globo.com'

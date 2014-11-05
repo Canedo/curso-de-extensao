@@ -53,6 +53,7 @@ class Pessoa(AbstractBaseUser):
     sobrenome = models.CharField(max_length=255, verbose_name='Sobrenome', blank=True)
     data_nascimento = models.DateField(verbose_name='Data de nascimento')
     cpf = models.CharField(max_length=14, verbose_name='CPF', unique=True)
+    email = models.EmailField(verbose_name='email address',max_length=255, unique=True, null=True)
     data_criacao = models.DateTimeField(auto_now_add=True, verbose_name='Data de criação', default=timezone.now)
     data_atualizacao = models.DateTimeField(auto_now=True, verbose_name='Data de atualização', default=timezone.now)
     tipo = models.IntegerField(max_length=255, choices=CHOICES_TIPO_PESSOA, verbose_name='Tipo de pessoa')
