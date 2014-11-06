@@ -11,8 +11,8 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from disciplina.models import Avaliacao
 from pessoa.models import Pessoa
-from django.contrib.sites.shortcuts import get_current_site
 from portal.forms import CustomPasswordResetForm
+
 
 def home(request):
     return render(request, 'base.html')
@@ -74,6 +74,7 @@ def alterar_senha(request):
 
     return render(request, 'change_password.html', {'form': form})
 
+
 def esqueci_senha(request):
     return password_reset(request,
                           template_name='forgot_password.html',
@@ -81,10 +82,13 @@ def esqueci_senha(request):
                           subject_template_name='email/password_reset_confirm_subject.txt',
                           html_email_template_name='email/password_reset_confirm',)
 
+
 def esqueci_senha_sucesso(request):
     messages.add_message(request, messages.SUCCESS, 'Um email será enviado em breve para o endereço de email informado com mais informações para redefinir a sua senha.')
     return HttpResponseRedirect(reverse('home'))
 
+
 def redefinir_senha(request, uidb64=None, token=None):
-    return password_reset_confirm(request, template_name='password_reset.html',
+    return password_reset_confirm(
+        request, template_name='password_reset.html',
         uidb64=uidb64, token=token, post_reset_redirect=reverse('home'))
