@@ -53,6 +53,7 @@ class Pessoa(AbstractBaseUser):
     sobrenome = models.CharField(max_length=255, verbose_name='Sobrenome', blank=True)
     data_nascimento = models.DateField(verbose_name='Data de nascimento')
     cpf = models.CharField(max_length=14, verbose_name='CPF', unique=True)
+    email = models.EmailField(verbose_name='Email Principal', max_length=255, unique=True, blank=True, null=True)
     data_criacao = models.DateTimeField(auto_now_add=True, verbose_name='Data de criação', default=timezone.now)
     data_atualizacao = models.DateTimeField(auto_now=True, verbose_name='Data de atualização', default=timezone.now)
     tipo = models.IntegerField(max_length=255, choices=CHOICES_TIPO_PESSOA, verbose_name='Tipo de pessoa')
@@ -102,8 +103,8 @@ class Contato(models.Model):
         (TELEFONE, 'Telefone',),
         (EMAIL, 'Email',),
     )
-    tipo = models.CharField(max_length=255, choices=CHOICES_TIPO_CONTATO, verbose_name='Tipo de Contato')
-    descricao = models.CharField(max_length=255, verbose_name='Descrição')
+    tipo = models.CharField(max_length=255, blank=True, choices=CHOICES_TIPO_CONTATO, verbose_name='Tipo de Contato')
+    descricao = models.CharField(max_length=255, blank=True, verbose_name='Descrição')
     pessoa = models.ForeignKey(Pessoa)
 
     def __unicode__(self):

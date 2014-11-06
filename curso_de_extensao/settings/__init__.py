@@ -133,3 +133,14 @@ IFRAME_URL = 'http://www.del.ufrj.br/~fmello/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'cursodeextensao.del@gmail.com '
+EMAIL_HOST_PASSWORD = 'q1w2E#R$'
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
