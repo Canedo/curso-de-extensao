@@ -15,6 +15,7 @@ class DisciplinaForm(forms.ModelForm):
         model = Disciplina
         fields = (
             'nome',
+            'turma',
             'limite_faltas',
             'limite_abonos',
             'data_inicio',
