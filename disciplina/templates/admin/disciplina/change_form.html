@@ -12,3 +12,8 @@
         .submit-row input[name="_addanother"], .submit-row input[name="_continue"]{display: none}
     </style>
 {% endblock %}
+
+{% block footer %}
+{{ block.super }}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/cursoextensao-ajuste_historico.js"></script>
+{% endblock %}

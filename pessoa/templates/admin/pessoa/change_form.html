@@ -1,13 +1,16 @@
 {% extends "admin/change_form.html" %}
 
 {% block extrastyle %}
+    {{ block.super }}
+    <style type="text/css">
+        .datetimeshortcuts {margin-left: -3px}
+        .datetimeshortcuts a:first-child {display: none}
+        .deletelink-box {display: none}
+        .submit-row input[name="_addanother"], .submit-row input[name="_continue"]{display: none}
+    </style>
+{% endblock %}
+
+{% block footer %}
 {{ block.super }}
-
-<style type="text/css">
-    .datetimeshortcuts {margin-left: -3px}
-    .datetimeshortcuts a:first-child {display: none}
-    .deletelink-box {display: none}
-    .submit-row input[name="_addanother"], .submit-row input[name="_continue"]{display: none}
-</style>
-
+    <script type="text/javascript" src="{{ STATIC_URL }}js/cursoextensao-ajuste_historico.js"></script>
 {% endblock %}
