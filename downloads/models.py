@@ -30,6 +30,7 @@ class ArquivoQuerySet(models.QuerySet):
 
 class Monografia(models.Model):
     nome = models.CharField(max_length=255, verbose_name='Nome')
+    autor = models.CharField(max_length=255, verbose_name='Autor')
     slug = AutoSlugField(populate_from='nome', unique=True)
     descricao = models.TextField(verbose_name='Descrição', blank=True)
     arquivo = NewFileField()
@@ -39,6 +40,9 @@ class Monografia(models.Model):
 
     def __unicode__(self):
         return self.nome
+
+    class Meta:
+        verbose_name = 'Monografia'
 
     def get_absolute_url(self):
         return reverse('download', kwargs={'slug': self.slug})
@@ -61,5 +65,5 @@ class ArquivoHistorico(models.Model):
         return u'[{2}][{0}] {1}: {3}'.format(self.data, self.arquivo, self.ip, self.usuario)
 
     class Meta:
-        verbose_name = 'Histórico de Downloads'
+        verbose_name = 'Estatísticas de Download'
         verbose_name_plural = verbose_name

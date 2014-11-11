@@ -39,7 +39,7 @@ delete_selected.short_description = ugettext_lazy("Delete selected %(verbose_nam
 
 @admin.register(Monografia)
 class ArquivoAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'slug',)
+    list_display = ('nome', 'autor',)
     readonly_fields = ('downloads',)
     actions = [delete_selected]
 
