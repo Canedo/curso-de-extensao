@@ -56,10 +56,10 @@ class DocumentosPendentesInline(admin.StackedInline):
 @admin.register(Pessoa)
 class PessoaAdmin(UserAdmin):
     add_form_template = 'admin/pessoa/add_form.html'
-    list_display = ('get_full_name', 'cpf', 'data_nascimento', 'email', 'tipo', )
-    list_display_links = ('get_full_name',)
+    list_display = ('nome', 'cpf', 'data_nascimento', 'email', 'tipo', )
+    list_display_links = ('nome',)
     list_filter = ('tipo', 'is_active',)
-    search_fields = ('nome', 'sobrenome', 'cpf',)
+    search_fields = ('nome', 'cpf',)
     readonly_fields = ('data_criacao', 'data_atualizacao',)
     inlines = [DocumentosPendentesInline, ContatoInline]
     form = PessoaChangeForm
@@ -68,14 +68,14 @@ class PessoaAdmin(UserAdmin):
 
     fieldsets = (
         ('Informações Pessoais', {
-            'fields': ('nome', 'sobrenome', 'cpf', 'email', 'data_nascimento',),
+            'fields': ('nome', 'cpf', 'email', 'data_nascimento',),
         }),
         ('Permissões', {
             'fields': ('tipo', 'is_active',),
         })
     )
     add_fieldsets = fieldsets
-    ordering = ('nome', 'sobrenome',)
+    ordering = ('nome',)
     filter_horizontal = ()
 
     def get_formsets_with_inlines(self, request, obj=None):

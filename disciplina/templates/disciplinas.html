@@ -20,7 +20,7 @@
                         {% for avaliacao in avaliacoes %}
                             <tr>
                                 <td>{{ avaliacao.disciplina.nome }}</td>
-                                <td>{{ avaliacao.disciplina.professor.get_full_name }}</td>
+                                <td>{{ avaliacao.disciplina.professor.nome }}</td>
                                 <td class="text-center">{{ avaliacao.faltas }}</td>
                                 <td class="text-center">
                                     {% if avaliacao.abonos >= avaliacao.disciplina.limite_abonos %}

@@ -51,7 +51,7 @@ atualizar_situacao.short_description = "Atualizar situação dos alunos selecion
 class DisciplinaAdmin(admin.ModelAdmin):
     list_display = ('nome', 'professor', 'turma', 'limite_faltas', 'limite_abonos', 'quant_alunos', 'data_inicio', 'data_termino')
     list_display_links = ('nome',)
-    search_fields = ('nome', 'professor__nome', 'professor__sobrenome',)
+    search_fields = ('nome', 'professor__nome')
     readonly_fields = ('data_criacao', 'data_atualizacao',)
     form = DisciplinaForm
     actions = [delete_selected]
@@ -62,7 +62,7 @@ class AvaliacaoAdmin(admin.ModelAdmin):
     list_display = ('aluno', 'disciplina', 'nota', 'faltas', 'abonos', 'situacao',)
     list_editable = ('nota', 'faltas', 'abonos',)
     list_display_links = None
-    search_fields = ('aluno__nome', 'aluno__sobrenome', 'disciplina__nome', 'disciplina__professor__nome', 'disciplina__professor__sobrenome', )
+    search_fields = ('aluno__nome', 'disciplina__nome', 'disciplina__professor__nome')
     list_filter = ('disciplina__nome',)
     actions = [atualizar_situacao]
 

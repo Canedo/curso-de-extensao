@@ -1,31 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if historicos %}
-    <div class="row-fluid">
-        <form method="get" class="form-inline" role="form">
-            <div class="form-group">
-                <label for="aluno">Aluno:</label>
-                <div class="input-group">
-                    <select name="aluno" id="aluno" class="form-control">
-                        <option value="0">Todos</option>
-                        {% for aluno in alunos %}
-                            <option value="{{ aluno.pk }}" {% if aluno.pk == aluno_id %}selected{% endif %}>{{ aluno.get_full_name }}</option>
-                        {% endfor %}
-                    </select>
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default btn-info"><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs hidden-sm">Buscar</s
-                    </span>
-                </div>
-            </div>
-        </form>
-    </div>
-    <br/>
-    {% endif %}
     <div class="panel panel-info">
         <div class="panel-heading">Histórico dos Alunos</div>
         <div class="panel-body">
             <div class="row-fluid table-responsive">
+                <form method="get">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" value="{{ q }}"/>
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-default btn-info"><span class="glyphicon glyphicon-search"></span> <span class="hidden-xs hidden-sm">Buscar</span></button>
+                        </span>
+                    </div>
+                </form>
+                <br/>
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
@@ -40,7 +28,7 @@
                     <tbody>
                         {% for historico in historicos %}
                             <tr>
-                                <td>{{ historico.aluno.get_full_name }}</td>
+                                <td>{{ historico.aluno.nome }}</td>
                                 <td>{{ historico.disciplina.nome }}</td>
                                 <td class="text-center">{{ historico.faltas }}</td>
                                 <td class="text-center">{{ historico.abonos }}</td>

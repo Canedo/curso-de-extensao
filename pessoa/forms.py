@@ -11,7 +11,7 @@ class PessoaChangeForm(forms.ModelForm):
 
     class Meta:
         model = Pessoa
-        fields = ('nome', 'sobrenome', 'data_nascimento', 'cpf', 'email', 'is_active', 'tipo',)
+        fields = ('nome', 'data_nascimento', 'cpf', 'email', 'is_active', 'tipo',)
 
     def clean_password(self):
         return self.initial['password']

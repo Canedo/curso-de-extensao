@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.utils.translation import ugettext as _
 from django.utils import timezone
@@ -40,6 +41,13 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
+class PessoaQuerySet(models.QuerySet):
+    def pesquisa(self, query):
+        if not query:
+            return self
+        return self.filter(Q(nome__icontains=query))
+
+
 class Pessoa(AbstractBaseUser):
     FUNCIONARIO = 1
     PROFESSOR = 2
@@ -49,11 +57,10 @@ class Pessoa(AbstractBaseUser):
         (PROFESSOR, 'Professor'),
         (ALUNO, 'Aluno'),
     )
-    nome = models.CharField(max_length=255, verbose_name='Nome')
-    sobrenome = models.CharField(max_length=255, verbose_name='Sobrenome', blank=True)
+    nome = models.CharField(max_length=255, verbose_name='Nome Completo')
     data_nascimento = models.DateField(verbose_name='Data de nascimento')
     cpf = models.CharField(max_length=14, verbose_name='CPF', unique=True)
-    email = models.EmailField(verbose_name='Email Principal', max_length=255, unique=True, blank=True, null=True)
+    email = models.EmailField(verbose_name='Email Principal', max_length=255, unique=True)
     data_criacao = models.DateTimeField(auto_now_add=True, verbose_name='Data de criação', default=timezone.now)
     data_atualizacao = models.DateTimeField(auto_now=True, verbose_name='Data de atualização', default=timezone.now)
     tipo = models.IntegerField(max_length=255, choices=CHOICES_TIPO_PESSOA, verbose_name='Tipo de pessoa')
@@ -64,6 +71,7 @@ class Pessoa(AbstractBaseUser):
     is_active = models.BooleanField(default=True, verbose_name='Ativo')
 
     objects = CustomUserManager()
+    custom_objects = PessoaQuerySet.as_manager()
 
     def has_perm(self, perm, obj=None):
         return True
@@ -79,18 +87,13 @@ class Pessoa(AbstractBaseUser):
     def is_staff(self):
         return self.is_superuser
 
-    def get_full_name(self):
-        return u'{0} {1}'.format(self.nome, self.sobrenome)
-
-    get_full_name.short_description = 'Nome completo'
-
     def get_short_name(self):
         return self.nome
 
     def __unicode__(self):
         if self.tipo == self.FUNCIONARIO:
-            return self.get_full_name()
-        return u'{0}'.format(self.get_full_name())
+            return self.nome
+        return u'{0}'.format(self.nome)
 
     class Meta:
         verbose_name = 'Pessoa'
@@ -122,4 +125,4 @@ class DocumentosPendentes(models.Model):
         verbose_name_plural = 'Documentos pendentes de aluno'
 
     def __unicode__(self):
-        return self.aluno.get_full_name()
+        return self.aluno.nome

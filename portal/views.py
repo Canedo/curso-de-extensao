@@ -26,18 +26,16 @@ def witty(request):
 @user_passes_test(lambda u: u.tipo == u.FUNCIONARIO)
 def historicos(request):
     context = {}
-    aluno_id = int(request.GET.get('aluno', 0))
-    alunos_pk_list = Avaliacao.objects.values_list('aluno__pk').distinct()
-    alunos = Pessoa.objects.filter(id__in=alunos_pk_list)
+
     historicos = Avaliacao.objects.all()
 
-    if aluno_id:
-        historicos = historicos.filter(aluno__id=aluno_id)
-    if historicos.count() == 0 and aluno_id:
-        messages.add_message(request, messages.ERROR, 'O aluno informado não existe')
+    query = request.GET.get('q', '')
 
-    context['aluno_id'] = aluno_id
-    context['alunos'] = alunos
+    if query:
+        alunos_id = Pessoa.custom_objects.pesquisa(query)
+        historicos = historicos.filter(aluno__id__in=alunos_id)
+
+    context['q'] = query
     context['historicos'] = historicos
     return render(request, 'historico.html', context)
 
