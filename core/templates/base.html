@@ -26,7 +26,7 @@
                         {% if request.user.is_authenticated and request.user.tipo == request.user.FUNCIONARIO %}
                             {% item request 'historicos' %}
                         {% endif %}
-                        {% if request.user.is_authenticated and request.user.tipo == request.user.ALUNO %}
+                        {% if request.user.is_authenticated and request.user.tipo == request.user.ALUNO and not request.user.bloqueado %}
                             {% item request 'disciplinas' %}
                         {% endif %}
                         {% if request.user.is_authenticated and request.user.tipo == request.user.ALUNO %}

@@ -68,6 +68,7 @@ class Pessoa(AbstractBaseUser):
     USERNAME_FIELD = 'cpf'
     REQUIRED_FIELDS = ['data_nascimento']
 
+    bloqueado = models.BooleanField(default=False, verbose_name='Bloqueado')
     is_active = models.BooleanField(default=True, verbose_name='Ativo')
 
     objects = CustomUserManager()
