@@ -32,6 +32,20 @@ def deploy(setup=False):
     __restart_services()
 
 
+def __prepare_new_server():
+    """
+    Preparando o ambiente
+    """
+    run('apt-get update')
+    run('apt-get upgrade -y')
+    run('apt-get update')
+    run('apt-get install -y git ruby1.9.1 ruby1.9.1-dev build-essential')
+    run('gem install chef --no-ri --no-rdoc')
+
+    print 'Rebooting to apply stuff...'
+    reboot()
+
+
 def __create_structure():
     """
     Cria estrutura de pastas no ambiente
@@ -66,26 +80,22 @@ def __sync_chef():
         run('chef-solo -c chef-repo/solo.rb -j chef-repo/dna.json')
 
 
-def __prepare_new_server():
+def __create_dbs():
     """
-    Preparando o ambiente
-    """
-    run('apt-get update')
-    run('apt-get upgrade -y')
-    run('apt-get update')
-    run('apt-get install -y git ruby1.9.1 ruby1.9.1-dev build-essential')
-    run('gem install chef --no-ri --no-rdoc')
-
-    print 'Rebooting to apply stuff...'
-    reboot()
-
-
-def __install_dependencies():
-    """
-    Instalação das dependências do sistema
+    Cria db, user e garante privilégios necessários
     """
     with cd('/opt/app/'):
-        run('pip install -r requirements.txt')
+        run('chmod 755 create-db.sh')
+        run("./create-db.sh '{db_name}' '{db_user}' '{db_pass}'".format(
+            db_name=DB_NAME, db_user=DB_USER, db_pass=DB_PASSWORD
+            ))
+
+
+def __install_virtualenv():
+    """
+    Instalação de virtualenv
+    """
+    run('virtualenv /opt/env')
 
 
 def __settings_nginx():
@@ -107,14 +117,12 @@ def __settings_gunicorn():
         run('ln -f ./curso_de_extensao/gunicorn.conf /etc/init/gunicorn.conf')
 
 
-def __restart_services():
+def __install_dependencies():
     """
-    Reinicia os serviços
+    Instalação das dependências do sistema
     """
-    run('fuser -k 80/tcp')
-    run('service nginx restart')
-    with cd('opt/app/'):
-        run('/opt/env/bin/gunicorn -c /opt/app/curso_de_extensao/gunicorn.py curso_de_extensao.wsgi:application &')
+    with cd('/opt/app/'):
+        run('pip install -r requirements.txt')
 
 
 def __migrate():
@@ -134,19 +142,11 @@ def __collecstatic():
         rm('./static')
 
 
-def __install_virtualenv():
+def __restart_services():
     """
-    Instalação de virtualenv
+    Reinicia os serviços
     """
-    run('virtualenv /opt/env')
-
-
-def __create_dbs():
-    """
-    Cria db, user e garante privilégios necessários
-    """
-    with cd('/opt/app/'):
-        run('chmod 755 create-db.sh')
-        run("./create-db.sh '{db_name}' '{db_user}' '{db_pass}'".format(
-            db_name=DB_NAME, db_user=DB_USER, db_pass=DB_PASSWORD
-            ))
+    run('fuser -k 80/tcp')
+    run('service nginx restart')
+    with cd('opt/app/'):
+        run('/opt/env/bin/gunicorn -c /opt/app/curso_de_extensao/gunicorn.py curso_de_extensao.wsgi:application &')
