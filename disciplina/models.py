@@ -59,7 +59,7 @@ class AvaliacaoManager(models.Manager):
 
 class Disciplina(models.Model):
     nome = models.CharField(max_length=255, verbose_name='Disciplina')
-    turma = models.CharField(max_length=255, verbose_name='Turma', blank=True)
+    turma = models.CharField(max_length=255, verbose_name='Turma', blank=True, default='')
     limite_faltas = models.IntegerField(verbose_name='Limite de faltas')
     limite_abonos = models.IntegerField(verbose_name='Limite de abonos')
     data_inicio = models.DateField(verbose_name='Data de início')

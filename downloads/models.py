@@ -30,7 +30,7 @@ class ArquivoQuerySet(models.QuerySet):
 
 class Monografia(models.Model):
     nome = models.CharField(max_length=255, verbose_name='Nome')
-    autor = models.CharField(max_length=255, verbose_name='Autor')
+    autor = models.CharField(max_length=255, verbose_name='Autor', default='Autor Desconhecido')
     slug = AutoSlugField(populate_from='nome', unique=True)
     descricao = models.TextField(verbose_name='Descrição', blank=True)
     arquivo = NewFileField()
