@@ -85,9 +85,18 @@ class PessoaAdmin(UserAdmin):
     filter_horizontal = ()
 
     def get_formsets_with_inlines(self, request, obj=None):
+        current = None
+        if obj:
+            current = Pessoa.objects.get(pk=obj.pk)
         for inline in self.get_inline_instances(request, obj):
-            if isinstance(inline, DocumentosPendentesInline) and (not obj or obj.tipo != obj.ALUNO):
-                continue
+            if isinstance(inline, DocumentosPendentesInline):
+                if obj is None or obj.tipo != obj.ALUNO:
+                    continue
+            if obj and  current.tipo != obj.tipo:
+                    request.POST['documentospendentes-TOTAL_FORMS'] = 1
+                    request.POST['documentospendentes-INITIAL_FORMS'] = 0
+                    request.POST['documentospendentes-MIN_NUM_FORMS'] = 1
+                    request.POST['documentospendentes-MAX_NUM_FORMS'] = 1
             yield inline.get_formset(request, obj), inline
 
     def response_add(self, request, obj, post_url_continue=None):

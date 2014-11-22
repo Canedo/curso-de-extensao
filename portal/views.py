@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from disciplina.models import Avaliacao
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.views import password_reset, password_reset_confirm
-from django.contrib import messages
-from django.conf import settings
 from django.core.urlresolvers import reverse
-from disciplina.models import Avaliacao
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from pessoa.models import Pessoa
 from portal.forms import CustomPasswordResetForm
 
@@ -88,5 +88,9 @@ def esqueci_senha_sucesso(request):
 
 def redefinir_senha(request, uidb64=None, token=None):
     return password_reset_confirm(
-        request, template_name='password_reset.html',
-        uidb64=uidb64, token=token, post_reset_redirect=reverse('home'))
+        request,
+        template_name='password_reset.html',
+        uidb64=uidb64,
+        token=token,
+        post_reset_redirect=reverse('home')
+    )

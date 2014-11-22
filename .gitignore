@@ -14,3 +14,4 @@ Vagrantfile
 *.sqlite3
 .vagrant
 media/
+curso_de_extensao/settings/local.py

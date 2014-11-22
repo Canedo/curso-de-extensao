@@ -2,10 +2,10 @@
 Projeto em Python/Django para a criação de um portal dos Cursos de Extensão do DEL da UFRJ.
 
 #### Requerimentos ####
-> python 2.7.x  
-> pip (vem com a instalação do python. Mais detalhes: http://pip.readthedocs.org/en/latest/installing.html)  
-> Django 1.7 (já no requirements do projeto)  
-> mysql 5.5.x (ou alguma versão mais nova)  
+> python 2.7.x
+> pip (vem com a instalação do python. Mais detalhes: http://pip.readthedocs.org/en/latest/installing.html)
+> Django 1.7 (já no requirements do projeto)
+> mysql 5.5.x (ou alguma versão mais nova)
 
 #### Instalação das dependências do projeto em ambiente local ####
 > É altamente recomendável o uso de virtualenv na configuração e
@@ -18,11 +18,11 @@ $ pip install -r requirements.txt
 #### Configuração do banco de dados local ####
 ```shell
 $ mysql -u root
-mysql> CREATE DATABASE cursodeextensao;  
-mysql> CREATE USER 'cursodeextensao'@'localhost' IDENTIFIED BY 'ilikerandompasswords';  
-mysql> GRANT ALL PRIVILEGES ON cursodeextensao.* TO 'cursodeextensao'@'localhost';  
-mysql> FLUSH PRIVILEGES;  
-mysql> exit;  
+mysql> CREATE DATABASE cursodeextensao;
+mysql> CREATE USER 'cursodeextensao'@'localhost' IDENTIFIED BY 'ilikerandompasswords';
+mysql> GRANT ALL PRIVILEGES ON cursodeextensao.* TO 'cursodeextensao'@'localhost';
+mysql> FLUSH PRIVILEGES;
+mysql> exit;
 ```
 É necessário que se crie um superuser para iniciar a trabalhar no sistema como admin.
 ```shell

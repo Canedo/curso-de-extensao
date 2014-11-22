@@ -124,11 +124,9 @@ class Avaliacao(models.Model):
         verbose_name_plural = 'Avaliações'
 
 
-def disciplina_post_save(sender, instance, action, *args, **kwargs):
+def disciplina_m2m_changed(sender, instance, action, *args, **kwargs):
     if action in ['post_add', 'post_remove', 'post_clear']:
-        Avaliacao.objects.filter(disciplina=instance).exclude(aluno=instance.aluno.all).delete()
-
         for aluno in instance.aluno.all():
             Avaliacao.objects.get_or_create(aluno=aluno, disciplina=instance)
 
-models.signals.m2m_changed.connect(disciplina_post_save, sender=Disciplina.aluno.through)
+models.signals.m2m_changed.connect(disciplina_m2m_changed, sender=Disciplina.aluno.through)

@@ -1,4 +1,5 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
+
 from django import forms
 from pessoa.models import Pessoa
 from django.contrib.auth.forms import PasswordResetForm
