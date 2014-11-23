@@ -45,7 +45,18 @@ class AvaliacaoQuerySet(models.QuerySet):
 
 class AvaliacaoManager(models.Manager):
     def get_queryset(self):
-        return AvaliacaoQuerySet(self.model, using=self._db)
+        qs = AvaliacaoQuerySet(self.model, using=self._db)
+        qs = qs.prefetch_related('disciplina')
+        avaliacoes_indisponiveis = []
+        disciplinas = [avaliacao.disciplina for avaliacao in qs]
+
+        for disciplina in disciplinas:
+            avaliacoes = qs.filter(disciplina=disciplina).exclude(aluno=disciplina.aluno.all).values('pk')
+            avaliacoes = [avaliacao['pk'] for avaliacao in avaliacoes]
+            avaliacoes_indisponiveis += avaliacoes
+            qs = qs.exclude(pk__in=avaliacoes_indisponiveis)
+
+        return qs
 
     def aprovados(self):
         return self.get_queryset().aprovados()
