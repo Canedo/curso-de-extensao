@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
 )
 
 THIRD_PARTY_APPS = (
@@ -126,7 +127,7 @@ AUTH_USER_MODEL = 'pessoa.Pessoa'
 AUTHENTICATION_BACKENDS += ('pessoa.backend.CustomBackend',)
 
 BUSINESS = {
-    'media_aprovacao': 5,
+    'media_aprovacao': 7,
 }
 
 IFRAME_URL = 'http://www.del.ufrj.br/~fmello/'
@@ -137,10 +138,15 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'cursodeextensao.del@gmail.com '
+EMAIL_HOST_USER = 'cursodeextensao.del@gmail.com'
 EMAIL_HOST_PASSWORD = 'q1w2E#R$'
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
