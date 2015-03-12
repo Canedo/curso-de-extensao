@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import unicodedata
-from django.db import models
-from django.db.models import Q
+
 from autoslug import AutoSlugField
 from django.core.urlresolvers import reverse
+from django.db import models
+from django.db.models import Q
 
 
 class NewFileField(models.FileField):
@@ -33,7 +34,7 @@ class Monografia(models.Model):
     autor = models.CharField(max_length=255, verbose_name='Autor', default='Autor Desconhecido')
     slug = AutoSlugField(populate_from='nome', unique=True)
     descricao = models.TextField(verbose_name='Descrição', blank=True)
-    arquivo = NewFileField()
+    arquivo = NewFileField(null=True, blank=True)
     downloads = models.IntegerField(verbose_name='Quantidade de downloads realizados', default=0)
 
     objects = ArquivoQuerySet.as_manager()

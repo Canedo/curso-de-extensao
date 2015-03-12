@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
+{% block bootstrap3_extra_head %}
+    {{block.super}}
+    <style>
+        #download.unavailable {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
 {% block bootstrap3_extra_script  %}
     {{block.super}}
     <script type="text/javascript" src="{{ STATIC_URL }}js/cursoextensao-arquivo.js"></script>
@@ -20,11 +29,18 @@
             <br/>
             <div class="list-group">
                 {% for arquivo in arquivos %}
-                    <a href="#" class="list-group-item file-link" data-slug="{{ arquivo.slug }}">
-                        <span class="glyphicon glyphicon-file"></span>
-                        {{ arquivo.nome }}
-                        <span class="badge">{{ arquivo.downloads }}</span>
-                    </a>
+                    {% if arquivo.arquivo %}
+                        <a href="#" class="list-group-item file-link" data-slug="{{ arquivo.slug }}">
+                            <span class="glyphicon glyphicon-file"></span>
+                            {{ arquivo.nome }}
+                            <span class="badge">{{ arquivo.downloads }}</span>
+                        </a>
+                    {% else %}
+                        <a href="#" class="list-group-item file-link unavailable" data-slug="{{ arquivo.slug }}">
+                            <span class="glyphicon glyphicon-file"></span>
+                            {{ arquivo.nome }}
+                        </a>
+                    {% endif %}
                 {% empty %}
                     <div class="alert alert-info">Nenhuma monografia encontrada</div>
                 {% endfor %}

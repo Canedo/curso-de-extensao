@@ -41,7 +41,8 @@ var arquivoModal = function() {
         arqNome = $('.file-nome'),
         arqDescricao = $('.file-descricao'),
         arqDownloads = $('.file-downloads'),
-        arqHistory = $('.file-history');
+        arqHistory = $('.file-history'),
+        downloads = $('#download');
     arqDescricao.html('');
     arqDownloads.html('');
     arqHistory.html('');
@@ -52,7 +53,8 @@ var arquivoModal = function() {
         arqNome.html(info.fields.nome);
         arqDescricao.html(info.fields.descricao);
         arqDownloads.html(info.fields.downloads);
-        $('#download').attr('href', info.url);
+        downloads.attr('href', info.url);
+        downloads.toggleClass('unavailable', !info.tem_arquivo)
         updateHistory($that.data('slug'));
     });
     return false;

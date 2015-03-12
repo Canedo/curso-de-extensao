@@ -48,6 +48,7 @@ def info(request, slug):
     obj_to_json = lambda obj: json.loads(serialize('json', obj))
     formatted = obj_to_json([arquivo])[0]
     formatted['url'] = arquivo.get_absolute_url()
+    formatted['tem_arquivo'] = True if arquivo.arquivo else False
     return JsonResponse(formatted, safe=False)
 
 
