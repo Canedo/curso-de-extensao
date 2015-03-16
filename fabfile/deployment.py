@@ -40,7 +40,7 @@ def __prepare_new_server():
     run('apt-get upgrade -y')
     run('apt-get update')
     run('apt-get install -y git ruby1.9.1 ruby1.9.1-dev build-essential')
-    run('gem install chef --no-ri --no-rdoc')
+    run('gem install chef -v 11.16.4 --no-ri --no-rdoc')
 
     print 'Rebooting to apply stuff...'
     reboot()
@@ -88,7 +88,7 @@ def __create_dbs():
         run('chmod 755 create-db.sh')
         run("./create-db.sh '{db_name}' '{db_user}' '{db_pass}'".format(
             db_name=DB_NAME, db_user=DB_USER, db_pass=DB_PASSWORD
-            ))
+        ))
 
 
 def __install_virtualenv():
@@ -148,5 +148,5 @@ def __restart_services():
     """
     run('fuser -k 80/tcp')
     run('service nginx restart')
-    with cd('opt/app/'):
+    with cd('/opt/app/'):
         run('/opt/env/bin/gunicorn -c /opt/app/curso_de_extensao/gunicorn.py curso_de_extensao.wsgi:application &')

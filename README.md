@@ -36,7 +36,7 @@ $ python manage.py runserver  # Executa a aplicação no servidor de desenvolvim
 #### Deploy para o ambiente de produção ####
 No path ~/.ssh, execute o segundo comando (o ip no comando é o ip da máquina de produção):
 ```shell
-$ ssh-keygen -R 104.131.39.168
+$ ssh-keygen -R 45.55.169.49
 ```
 Para realizar deploy em um ambiente novo, execute o seguinte comando:
 ```shell
@@ -58,6 +58,7 @@ Para isso é necessário executar o seguinte comando: (o cpf e a data de nascime
 ```shell
 $ python manage.py createsuperuser --cpf 00000000000 --data_nascimento 2000-10-10
 ```
-E na sequência escolher uma senha para o usuário.
+E na sequência escolher uma senha para o usuário, como por exemplo:
+$ 20001010 (a senha precisa ter o formato da data de nascimento, inicialmente)
 
 Após isso será possível logar na aplicação com o usuário 00000000000 e senha escolhida no passo anterior.
