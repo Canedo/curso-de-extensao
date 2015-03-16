@@ -3,7 +3,7 @@
 from curso_de_extensao.settings import *
 
 
-ALLOWED_HOSTS = ('104.131.39.168',)
+ALLOWED_HOSTS = ('45.55.169.49',)
 
 DEBUG = False
 
